@@ -112,6 +112,15 @@ begin
 					end if;
 			end if;
 			
+			-------------SAVE AND RESTORE -----------------------
+			if(op = "10") then
+				if (op3 = "111100") then ---SAVE
+					ncwp <= '0';
+				elsif (op3 = "111101") then --RESTORE
+					ncwp <= '1';
+				end if;
+			end if;
+			
 	end process;
 
 

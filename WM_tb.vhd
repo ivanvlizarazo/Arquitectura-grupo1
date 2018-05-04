@@ -1,6 +1,6 @@
 
-LIBRARY ieee;
-USE ieee.std_logic_1164.ALL;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
 
@@ -67,8 +67,8 @@ BEGIN
 		rs2 <= "10000";
 		rd <= "10001";
 		op <= "10";
-		op3 <= "100000";
-		cwp <= '0';
+		op3 <= "111100";
+		cwp <= '1';
       
       wait for 80 ns;
 		
@@ -76,8 +76,8 @@ BEGIN
 		rs2 <= "00100";
 		rd <= "10100";
 		op <= "10";
-		op3 <= "100000";
-		cwp <= '1';
+		op3 <= "111101";
+		cwp <= '0';
       
       wait for 80 ns;	
 
