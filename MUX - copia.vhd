@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    16:29:53 05/04/2018 
+-- Create Date:    16:43:40 04/13/2018 
 -- Design Name: 
--- Module Name:    PSR - Behavioral 
+-- Module Name:    MUX - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -29,35 +29,33 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity PSR is
-    Port ( NZVC : in  STD_LOGIC_VECTOR (3 downto 0):="0000";
-           nCWP : in  STD_LOGIC;
-           CLK : in  STD_LOGIC;
-           CWP : out  STD_LOGIC;
-           C : out  STD_LOGIC;
-			  RST: 	in STD_LOGIC);
+entity MUX is
+    Port ( i : in  STD_LOGIC;
+           crs2 : in  STD_LOGIC_VECTOR (31 downto 0);
+           Imm32 : in  STD_LOGIC_VECTOR (31 downto 0);
+           outmux : out  STD_LOGIC_VECTOR (31 downto 0));
+end MUX;
 
-end PSR;
+architecture Behavioral of MUX is
 
-
-architecture Behavioral of PSR is
----signal AUX : STD_LOGIC_VECTOR(3 downto 0):="0000";
-begin
-process(CLK) 
 begin
 
-if(rising_edge(CLK)) then
-	if (RST = '1') then
-		C <= '0';
-		CWP <= '0';
-	else
-		C <= NZVC(0);
-		CWP <= nCWP;
-	end if;
-	
-	
-end if;
+process (i, crs2, Imm32)
 
+  begin
+    
+    if(i = '1') then
+	   outmux <= Imm32;
+		
+		else 
+		  outmux <= crs2;
+		  
+	 end if;
+	 
 end process;
+	
+	 
+
+
 end Behavioral;
 

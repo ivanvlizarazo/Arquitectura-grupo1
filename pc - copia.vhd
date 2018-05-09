@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    16:29:53 05/04/2018 
+-- Create Date:    16:28:37 04/04/2018 
 -- Design Name: 
--- Module Name:    PSR - Behavioral 
+-- Module Name:    pc - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -29,35 +30,30 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity PSR is
-    Port ( NZVC : in  STD_LOGIC_VECTOR (3 downto 0):="0000";
-           nCWP : in  STD_LOGIC;
-           CLK : in  STD_LOGIC;
-           CWP : out  STD_LOGIC;
-           C : out  STD_LOGIC;
-			  RST: 	in STD_LOGIC);
+entity pc is
+    Port ( Address : in  STD_LOGIC_VECTOR (31 downto 0);
+           rst : in  STD_LOGIC;
+           clk : in  STD_LOGIC;
+           pcout : out  STD_LOGIC_VECTOR (31 downto 0));
+end pc;
 
-end PSR;
+architecture Behavioral of pc is
 
-
-architecture Behavioral of PSR is
----signal AUX : STD_LOGIC_VECTOR(3 downto 0):="0000";
 begin
-process(CLK) 
+process(rst,clk)
 begin
-
-if(rising_edge(CLK)) then
-	if (RST = '1') then
-		C <= '0';
-		CWP <= '0';
+	if rst = '1' then
+		if rising_edge(clk)then
+			pcout <= x"00000000";
+		end if;
+	
 	else
-		C <= NZVC(0);
-		CWP <= nCWP;
+		if rising_edge(clk)then
+			pcout <= Address;
+		end if;
 	end if;
-	
-	
-end if;
-
 end process;
+		
+	
 end Behavioral;
 

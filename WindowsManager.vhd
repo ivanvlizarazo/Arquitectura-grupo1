@@ -52,6 +52,16 @@ begin
 	process(rs1, rs2, rd, op, op3, cwp)
 		begin
 		
+		
+			-------------SAVE AND RESTORE -----------------------
+			if(op = "10") then
+				if (op3 = "111100") then ---SAVE
+					ncwp <= '0';
+				elsif (op3 = "111101") then --RESTORE
+					ncwp <= '1';
+				end if;
+			end if;
+		
 			------- RS1 ----------------------------------
 			----- out , local ------------
 			if(conv_integer(rs1) >= 8) and (conv_integer(rs1) <= 23) then
@@ -70,7 +80,7 @@ begin
 						nrs1 <= ('0' & rs1) - "010000";
 						elsif (cwp = '0') then
 						nrs1 <= ('0' & rs1);
-					end if;
+					end if; 
 			end if;
 			
 			------- RS2 ----------------------------------
@@ -92,6 +102,9 @@ begin
 					end if;	
 			end if;
 			
+			
+
+			
 			------- RD ----------------------------------
 			
 			if(conv_integer(rd) >= 8) and (conv_integer(rd) <= 23) then
@@ -112,14 +125,6 @@ begin
 					end if;
 			end if;
 			
-			-------------SAVE AND RESTORE -----------------------
-			if(op = "10") then
-				if (op3 = "111100") then ---SAVE
-					ncwp <= '0';
-				elsif (op3 = "111101") then --RESTORE
-					ncwp <= '1';
-				end if;
-			end if;
 			
 	end process;
 
