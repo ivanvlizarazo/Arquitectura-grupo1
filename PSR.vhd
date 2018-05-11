@@ -46,13 +46,14 @@ begin
 process(CLK) 
 begin
 
-if(rising_edge(CLK)) then
+
 	if (RST = '1') then
 		C <= '0';
 		CWP <= '0';
 	else
-		C <= NZVC(0);
-		CWP <= nCWP;
+		if(rising_edge(CLK)) then
+			C <= NZVC(0);
+			CWP <= nCWP;
 	end if;
 	
 	
