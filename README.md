@@ -4,46 +4,39 @@ Valentina Rendón Acosta 1088345193
 Jorge Iván Villada Lizarazo 1116267609
 Karen Lopez 1088338015
 
+------------procesador 3-----------
 
-1) regitser file debe modificarse no va a ser de 32 sino un modulo con 40 registros (0-39)
-rs1,rs2,rd va a ser nrs1,nrs2,nrd de 6 bits diferente a los 5 bits del anterior
+load - store
 
-los registros O de la ventana 0 y con los i de la ventana 1y los 0 de la ventana 1 a los i de la ventana 0
+ld[address], reg(rd) va a un address que es calculado como una suma y va al DM y dependiendo el address, los saca y los almacena en el RF
 
-cwp-> (current window pointer) saco valor ventana que estoy 
-      psr(4:0)
-      (Processor state register)
-                                 
-de una ventana 1 a la ventana 0 hay 16 registros de disntancia  
-============================ window manager =============================================
-when sean registros de  salida (O) o locales ( L locals) nrs1 <= rs1 +(cwp * 16)
-when sean registros locales ( i       ) nrs1 <= rs1 -(cwp * 16)
-nrd <= rd (cwp * 16)
+st reg(rd) [address] va a la memoria de datos, calcula el address (suma) y lo utiliza para almacenar el contenido del registro destino
 
-windows manager => traducir registros de una venbtana a la otra 
-                   
-Save => formato 3 cuando llega save lee el ncwp(nuevo cwp)= cwp -1
-restore => formato 3 cuando llega save lee el ncwp(nuevo cwp)= cwp +1
-suman registro fuente 1 y registro fuente 2 del actual y lo guardan en la ventana nueva o la que voy
-orden (save rs1 | )
+nueva señal CRD
 
-calcula nueva direcciones con lo anterior
+address <-- crs1 + crs2
+            crs+sev(imm13)
 
-================================================================================================
-psr  registro de 5 bits, tarea de almacena NZVC del icc |registro debe tener clock 
-y la ventana 0 ó 1 
+load y store son de formato 3 el op es 11 
+el op es de 6 bits
 
-entras NVZC
-entra 1 bit del cwp
-================================================================================================
-psr modifier registro  hace lo de la pagina 170 de sparcv8
+al RF le entra una nueva señal llamada WREN (write enable) que me deshabilita la escritura en el RF
+cuando hay un store, tiene que almacenar dato en el DM y no en el RF, eso lo hace la UC
 
-entra aluresult ->(32 bits)
-        csr1 -> (4 bits)
-        op2 -> (1 bit el más significativo )
-        ALUOP -> (6bits)
- sale NVZC       
-      
-=============================================================================================
+wrnem-- nueva señal
 
-lógicas no deben tener ni carry ni overflow solo 
+cuando hay un store, uso el nuevo mux para que me deje pasar la señal de arriba de la DM 
+al nuevo mux le entra el resultado de la ALU y el CDR 
+
+en la UC aparecen más señales 
+
+el Dm es una RAM que tien un puerto de lectura y escritura (será asíncrona)
+
+--------------procesador 4-----------------------
+
+Branches: son saltos condicionados y saltos relativos y tienen un bit de anulación, (no lo tendremos en cuenta)
+
+formato 2
+      op -> 00
+      op2-> 0100
+ si hay un branch se tiene que ir a ver el "cond" que me verifica qué branch voy a utilizar (en total son 16)
