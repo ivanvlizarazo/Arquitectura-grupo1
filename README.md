@@ -51,3 +51,28 @@ formato 2
 disp22 son los 22 bits menos significativos de lo que sale del IM y se le hace extension de signo
 
 el carry del psr entra a la ALU
+
+
+call and link: siempre ejecuta delay slot y es un salto relativo
+
+formato 1   
+op --> 01
+
+guarda en el registro O7 lo del PC
+PC <-- PC + disp(30)
+
+cuando hay un Call, permito escritura en el rf
+dejo pasar el pc en el ultimo mux y lo guardo en el rf
+
+
+-----------Jump and link---------
+
+Salto incondicional, ejecuta delay slot pero el salto es absoluto
+
+formato 3: jmpl [address], reg(rd)
+crs1 +crs2
+crs1+seu(imm13)
+
+en el RF(rd) almaceno el valor actual del PC
+
+no guardo en el dm, permte guardar en el RFx||
