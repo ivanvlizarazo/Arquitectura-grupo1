@@ -36,7 +36,18 @@ el Dm es una RAM que tien un puerto de lectura y escritura (será asíncrona)
 
 Branches: son saltos condicionados y saltos relativos y tienen un bit de anulación, (no lo tendremos en cuenta)
 
+cmp %l0, 5 --> subcc
+beq label
+
 formato 2
       op -> 00
       op2-> 0100
  si hay un branch se tiene que ir a ver el "cond" que me verifica qué branch voy a utilizar (en total son 16)
+ 
+ cuando hay un branch y es tomado el PC se modifica PC <-- PC + SEU(disp22) "lógica de saltos
+ 
+ hay nuevo mux de 4 a 1: 
+ 
+disp22 son los 22 bits menos significativos de lo que sale del IM y se le hace extension de signo
+
+el carry del psr entra a la ALU
