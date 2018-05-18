@@ -124,6 +124,11 @@ begin
 				
 					Dwr <= crs1 and (not outmux);
 					
+				when "111100" => --- SAVE
+					Dwr <= crs1 - outmux;
+				when "111101" => --- RESTORE
+					Dwr <= crs1 + outmux;
+					
 				when others =>
 				
 					Dwr <= (others => '0');
